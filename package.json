@@ -8,7 +8,12 @@
     "build": "rimraf dist && tsc",
     "start": "node dist/server.js"
   },
-  "keywords": ["englishyaari", "typescript", "express", "mongodb"],
+  "keywords": [
+    "englishyaari",
+    "typescript",
+    "express",
+    "mongodb"
+  ],
   "author": "Gaurav Meena",
   "license": "ISC",
   "dependencies": {
@@ -16,7 +21,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.5",
-    "zod": "^3.24.1"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
