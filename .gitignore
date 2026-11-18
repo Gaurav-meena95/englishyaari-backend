@@ -24,3 +24,13 @@ Thumbs.db
 # 6. IDE / Editor Folders
 .vscode/
 .idea/
+
+# 7. Temporary & Scratch Files
+scratch/
+coverage/
+*.tsbuildinfo
+
+# 7. Temporary & Scratch Files
+scratch/
+coverage/
+*.tsbuildinfo

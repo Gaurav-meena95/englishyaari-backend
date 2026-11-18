@@ -1,0 +1,230 @@
+{
+  "info": {
+    "_postman_id": "englishyaari-backend-assignment",
+    "name": "EnglishYaari Backend API Collection",
+    "description": "Comprehensive Postman collection for EnglishYaari Backend Assignment testing all 6 endpoints including MongoDB Aggregation Pipelines.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5001",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "teacherId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Teachers",
+      "item": [
+        {
+          "name": "Create Teacher",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data._id) {",
+                  "    pm.collectionVariables.set('teacherId', jsonData.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Dr. Priya Mehta\",\n  \"email\": \"priya.mehta@englishyaari.com\",\n  \"specialization\": \"Business English & Public Speaking\",\n  \"experience\": 6\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teachers",
+              "host": ["{{baseUrl}}"],
+              "path": ["teachers"]
+            }
+          }
+        },
+        {
+          "name": "Get All Teachers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/teachers",
+              "host": ["{{baseUrl}}"],
+              "path": ["teachers"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "API 1 - Create User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data._id) {",
+              "    pm.collectionVariables.set('userId', jsonData.data._id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fullName\": \"Rahul Sharma\",\n  \"email\": \"rahul.sharma@example.com\",\n  \"phone\": \"+919876543210\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": ["{{baseUrl}}"],
+          "path": ["users"]
+        }
+      }
+    },
+    {
+      "name": "API 2 - Create Session",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data._id) {",
+              "    pm.collectionVariables.set('sessionId', jsonData.data._id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"teacherId\": \"{{teacherId}}\",\n  \"startTime\": \"2026-11-20T10:00:00.000Z\",\n  \"endTime\": \"2026-11-20T10:45:00.000Z\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions",
+          "host": ["{{baseUrl}}"],
+          "path": ["sessions"]
+        }
+      }
+    },
+    {
+      "name": "API 3 - Available Sessions for Booking (Aggregation)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/sessions/available?dateTimestamp=1795168800000",
+          "host": ["{{baseUrl}}"],
+          "path": ["sessions", "available"],
+          "query": [
+            {
+              "key": "dateTimestamp",
+              "value": "1795168800000",
+              "description": "Timestamp or ISO date for target day"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "API 4 - Book Session",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{sessionId}}/book",
+          "host": ["{{baseUrl}}"],
+          "path": ["sessions", "{{sessionId}}", "book"]
+        }
+      }
+    },
+    {
+      "name": "API 5 - Mark Session Complete",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{sessionId}}/complete",
+          "host": ["{{baseUrl}}"],
+          "path": ["sessions", "{{sessionId}}", "complete"]
+        }
+      }
+    },
+    {
+      "name": "API 6 - User Session List (Aggregation with $facet)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users/{{userId}}/sessions",
+          "host": ["{{baseUrl}}"],
+          "path": ["users", "{{userId}}", "sessions"]
+        }
+      }
+    }
+  ]
+}

@@ -12,8 +12,13 @@ app.use(cors());
 app.use(express.json());
 
 
+// Health check endpoints
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
 app.get('/', (req: Request, res: Response) => {
-    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 app.use('/users', userRoutes);
