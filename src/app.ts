@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares/errorHandler';
 import userRoutes from './routes/user.routes';
+import teacherRoutes from './routes/teacher.routes';
 
 const app: Application = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/users', userRoutes);
+app.use('/teachers', teacherRoutes);
 
 app.use(errorHandler);
 
